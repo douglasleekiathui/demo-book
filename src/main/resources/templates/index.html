@@ -1,0 +1,85 @@
+<script>
+function doPost(url, body) {
+	const xhr = new XMLHttpRequest();
+	xhr.open('POST', url);
+	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.setRequestHeader('custom-authorization', document.getElementById('username').value);
+	xhr.onload = () => {
+	  if (xhr.readyState == 4 && xhr.status == 200) {
+		document.getElementById('response').value = xhr.responseText;
+	  } else {
+		document.getElementById('response').value = xhr.status + '\n' + xhr.responseText;
+	  }
+	};
+	xhr.send(body);
+}
+
+function find() {
+	const body = JSON.stringify({
+	  name: document.getElementById('name').value,
+	  title: document.getElementById('title').value
+	});
+	doPost('http://localhost:8080/api/v1/book/find', body);
+}
+
+function add() {
+	const body = document.getElementById('add').value;
+	doPost('http://localhost:8080/api/v1/book/add', body);
+}
+
+function update() {
+	const body = document.getElementById('update').value;
+	doPost('http://localhost:8080/api/v1/book/update', body);
+}
+
+function deletef() {
+	const body = JSON.stringify({"isbn" : document.getElementById('delete').value});
+	doPost('http://localhost:8080/api/v1/book/delete', body);
+}
+</script>
+<div>
+	Username: <input id="username" value='anything'>
+	(usernames that start with 'd' is allowed to delete books)
+</div>
+<br>
+<div style="width:45%; float:left; margin:5px; padding:10px; border:solid">
+<h3>Add book</h3>
+	<textarea id="add" cols="70" rows="8">
+	{
+		"isbn":"1234567890123",
+		"title":"the little mermaid",
+		"publishYear":1999,
+		"price":12.34, 
+		"genre":"ROMANCE",
+		"authors":[{"id":1}]
+	}</textarea>
+	<button onclick='add()'>Add</button>
+</div>
+<div style="width:45%; float:left; margin:5px; padding:10px; border:solid">
+	<h3>Update book</h3>
+	<textarea id="update" cols="70" rows="8">
+	{
+		"isbn":"1234567890123",
+		"title":"the little mermaid2",
+		"publishYear":2000,
+		"price":12.35, 
+		"genre":"COMEDY",
+		"authors":[{"id":2}, {"name":"Randy Jackson"}]
+	}</textarea>
+	<button onclick='update()'>Update</button>
+</div>
+<div style="width:45%; float:left; margin:5px; padding:10px; border:solid; min-height:100px">
+	<h3>Delete book</h3>
+	isbn: <input id="delete" value="1234567890123"/input>
+	<button onclick='deletef()'>Delete</button>
+</div>
+<div style="width:45%; float:left; margin:5px; padding:10px; border:solid; min-height:100px">
+	<h3>Find book</h3>
+	title: <input id='title' value='title 2'><br>
+	author name: <input id='name' value='Charles Davison'>
+	<button onclick='find()'>Find</button>
+</div>
+<div style="width:100%; float:left">
+	<h3>Common Response:</h3>
+	<textarea id="response" cols="200" rows="7"></textarea>
+</div>
