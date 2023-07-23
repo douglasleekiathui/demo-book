@@ -15,6 +15,8 @@ To test project
 4. there are four sections, namely 1) Add book, 2) Update book, 3) Find book, 4) Delete book  
 5. when adding or updating books, authors will be added as accordingly
 6. when deleting books, authors will NOT be deleted accordingly
+7. books are allowed to have 0 to many authors
+8. authors must have either name or dob
  
 There is already pre-populated data which can be found in src/main/resouces/data.sql  
 

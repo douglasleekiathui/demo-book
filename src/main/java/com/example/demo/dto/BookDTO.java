@@ -9,6 +9,7 @@ import com.example.demo.model.Book;
 import com.example.demo.model.Genre;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -29,6 +30,7 @@ public class BookDTO {
 	@NotNull
 	@WhitelistedValue(enumVal=Genre.class)
 	private String genre;
+	@Valid
 	private List<AuthorDTO> authors;
 	public BookDTO() {}
 	public BookDTO(Book book) {
